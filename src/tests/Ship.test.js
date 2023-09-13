@@ -16,6 +16,7 @@ describe('methods', () => {
 
   test('isSunk', () => {
     for (let i = 0; i < 5; i++) {
+      expect(ship.isSunk()).toBe(false);
       ship.hit();
     }
     expect(ship.isSunk()).toBe(true);
