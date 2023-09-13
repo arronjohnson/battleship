@@ -4,7 +4,9 @@ export default class Gameboard {
   static SIZE = 10;
 
   constructor() {
-    this.grid = new Array(10).fill(null).map(() => new Array(10).fill(null));
+    this.grid = new Array(Gameboard.SIZE)
+      .fill(null)
+      .map(() => new Array(Gameboard.SIZE).fill(null));
     this.placedShips = [];
   }
 
