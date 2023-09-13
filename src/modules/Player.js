@@ -4,24 +4,13 @@ export default class Player {
   constructor(name) {
     this.name = name;
     this.gameboard = new Gameboard();
-    this.isTurn = false;
   }
 
-  startTurn() {
-    this.isTurn = true;
-  }
-
-  endTurn() {
-    this.isTurn = false;
-  }
-
-  attack(player, [x, y]) {
-    if (!this.isTurn) return false;
+  static attack(player, [x, y]) {
     return player.gameboard.receiveAttack([x, y]);
   }
 
-  attackRandom(player) {
-    if (!this.isTurn) return false;
+  static attackRandom(player) {
     return player.gameboard.receiveRandomAttack();
   }
 }
