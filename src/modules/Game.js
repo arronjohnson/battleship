@@ -4,8 +4,11 @@ export default class Game {
   constructor() {
     this.p1 = new Player('player');
     this.p2 = new Player('computer');
-    this.p1.gameboard.placeShipsRandomly();
     this.p2.gameboard.placeShipsRandomly();
+  }
+
+  areShipsPlaced() {
+    return this.p1.gameboard.placedShips.length === 5;
   }
 
   isGameOver() {
@@ -22,5 +25,11 @@ export default class Game {
 
   computerTurn() {
     return this.p1.gameboard.receiveRandomAttack();
+  }
+
+  reset() {
+    this.p1.resetBoard();
+    this.p2.resetBoard();
+    this.p2.gameboard.placeShipsRandomly();
   }
 }
