@@ -1,0 +1,182 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap');
+
+@font-face {
+  font-family: 'NFL-Dolphins';
+  src:
+    url('./NFLDOLPH.woff') format('woff'),
+    url('./NFLDOLPH.woff2') format('woff2');
+  font-style: normal;
+  font-weight: 400;
+}
+
+$accent-color: #3689fc;
+$dark-blue: #374951;
+$blue: #56727e;
+$light-blue: #9ab0ba;
+
+html {
+  box-sizing: border-box;
+  height: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+%flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+body {
+  @extend %flex-column;
+  background: radial-gradient($blue, 80%, $dark-blue);
+  color: #fff;
+  font-family: 'Lato', sans-serif;
+  min-height: 100%;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+}
+
+.dialog {
+  align-items: center;
+  background-color: transparent;
+  border: 0;
+
+  &[open] {
+    @extend %flex-column;
+    animation: fadeIn 3s ease normal;
+  }
+
+  &::backdrop {
+    background-color: transparentize(black, 0.2);
+  }
+
+  &__heading {
+    color: red;
+    font-family: 'NFL-Dolphins';
+    font-size: 2rem;
+
+    &--win {
+      color: greenyellow;
+    }
+  }
+}
+
+.button {
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+  }
+}
+
+.restart-button {
+  background-color: transparent;
+  border: 0;
+  color: #fff;
+  font-family: 'NFL-Dolphins';
+  font-size: 1.8rem;
+}
+
+.header {
+  background-color: $dark-blue;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.3);
+  padding: 16px 20px;
+
+  &__heading {
+    font-family: 'NFL-Dolphins';
+    font-size: 2.6rem;
+    letter-spacing: 1px;
+    margin: 0;
+    text-align: center;
+  }
+}
+
+main {
+  display: flex;
+  gap: 48px;
+  justify-content: center;
+  margin-top: auto;
+}
+
+.gameboard-container {
+  @extend %flex-column;
+
+  &__title {
+    font-family: 'NFL-Dolphins';
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    margin: 0 8px 12px;
+
+    &--p2 {
+      text-align: right;
+    }
+  }
+}
+
+.gameboard {
+  background-color: $dark-blue;
+  border: 1px solid $dark-blue;
+  box-shadow: rgba(0, 0, 0, 0.3) 0 0 10px 2px;
+  display: grid;
+  gap: 1px;
+  grid-template-columns: repeat(10, 1fr);
+  height: 300px;
+  width: 300px;
+
+  &--p2:hover {
+    cursor: pointer;
+  }
+
+  &__cell {
+    background-color: $light-blue;
+
+    &--ship {
+      background-color: rgb(75, 75, 75);
+    }
+
+    &--hit {
+      background-color: #de3434;
+      outline: 1px solid #ff5c5e;
+      z-index: 2;
+    }
+
+    &--miss {
+      background-color: #fff;
+    }
+  }
+}
+
+.footer {
+  margin: auto 16px 0 0;
+  text-align: right;
+
+  &__icon-link {
+    color: #fff;
+    font-size: 2rem;
+    user-select: none;
+
+    &:hover {
+      color: $light-blue;
+      cursor: pointer;
+    }
+  }
+
+  &__copyright {
+    margin-top: 8px;
+  }
+}
