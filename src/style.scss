@@ -14,7 +14,10 @@ $dark-blue: #374951;
 $blue: #56727e;
 $light-blue: #9ab0ba;
 $ship-color: rgb(75, 75, 75);
-$cell-size: calc(300px / 10);
+$board-size: 300px;
+$board-size-small: 260px;
+$cell-size: calc($board-size / 10);
+$cell-size-small: calc($board-size-small / 10);
 
 html {
   box-sizing: border-box;
@@ -141,8 +144,8 @@ main {
   display: grid;
   gap: 1px;
   grid-template-columns: repeat(10, 1fr);
-  height: 300px;
-  width: 300px;
+  height: $board-size;
+  width: $board-size;
 
   &--p2:hover {
     cursor: pointer;
@@ -168,7 +171,7 @@ main {
 }
 
 .ship-placement {
-  width: 300px;
+  width: $board-size;
 
   &__title {
     font-family: 'NFL-Dolphins';
@@ -251,5 +254,76 @@ main {
 
   &__copyright {
     margin-top: 8px;
+  }
+}
+
+@media (max-width: 700px) {
+  main {
+    align-items: center;
+    flex-direction: column;
+    margin: 32px 0;
+  }
+
+  .ship-placement {
+    height: 300px;
+  }
+}
+
+@media (max-width: 400px) {
+  .header {
+    &__heading {
+      font-size: 2rem;
+    }
+  }
+
+  .gameboard-container {
+    &__title {
+      font-size: 1.1rem;
+    }
+  }
+
+  .gameboard {
+    height: $board-size-small;
+    width: $board-size-small;
+  }
+
+  .ship-placement {
+    display: flex;
+    flex-direction: column;
+    width: 240px;
+
+    &__title {
+      font-size: 1.1rem;
+    }
+  }
+
+  .button-container {
+    justify-content: center;
+    gap: 8px;
+  }
+
+  .button {
+    padding: 4px 8px;
+  }
+
+  .ship-container {
+    align-self: center;
+  }
+
+  .ship {
+    width: $cell-size-small;
+
+    &__cell {
+      height: $cell-size-small;
+    }
+
+    &--horizontal {
+      height: $cell-size-small;
+      width: min-content;
+    }
+  }
+
+  .ship--horizontal > .ship__cell {
+    width: $cell-size-small;
   }
 }
