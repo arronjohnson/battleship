@@ -82,19 +82,10 @@ a {
   }
 }
 
-.button {
-  &:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-  }
-}
-
 .restart-button {
   background-color: transparent;
   border: 0;
   color: #fff;
-  font-family: 'NFL-Dolphins';
-  font-size: 1.8rem;
 }
 
 .header {
@@ -122,10 +113,8 @@ main {
   @extend %flex-column;
 
   &__title {
-    font-family: 'NFL-Dolphins';
     font-size: 1.3rem;
-    letter-spacing: 1px;
-    margin: 0 8px 12px;
+    margin: 0 4px 12px;
 
     &--p2 {
       text-align: right;
@@ -174,10 +163,8 @@ main {
   width: $board-size;
 
   &__title {
-    font-family: 'NFL-Dolphins';
     font-size: 1.3rem;
-    letter-spacing: 1px;
-    margin: 0 8px 12px;
+    margin: 0 0 12px;
   }
 
   &--hidden {
@@ -193,9 +180,20 @@ main {
 .button {
   background-color: $dark-blue;
   border: 1px solid black;
+  border-radius: 8px;
   color: #fff;
-  font-family: 'NFL-Dolphins';
   padding: 8px 16px;
+  transition: 0.2s transform ease-in-out;
+
+  &:hover {
+    background-color: darken($dark-blue, 7%);
+    cursor: pointer;
+  }
+
+  &:active {
+    background-color: darken($dark-blue, 14%);
+    transform: scale(0.96);
+  }
 }
 
 .ship-container {
@@ -294,6 +292,10 @@ main {
 
     &__title {
       font-size: 1.1rem;
+    }
+
+    &--hidden {
+      display: none;
     }
   }
 
