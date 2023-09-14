@@ -88,7 +88,11 @@ export default class Gameboard {
   }
 
   receiveRandomAttack() {
-    return this.receiveAttack(Gameboard.#getRandomCoordinate());
+    let success = false;
+    while (!success) {
+      success = this.receiveAttack(Gameboard.#getRandomCoordinate());
+    }
+    return true;
   }
 
   allShipsSunk() {
