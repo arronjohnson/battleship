@@ -21,6 +21,6 @@ export default class Game {
   }
 
   getWinner() {
-    return this.p2.gameboard.allShipsSunk ? 'player' : 'computer';
+    return this.p2.gameboard.allShipsSunk() ? 'player' : 'computer';
   }
 }
