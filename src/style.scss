@@ -13,6 +13,8 @@ $accent-color: #3689fc;
 $dark-blue: #374951;
 $blue: #56727e;
 $light-blue: #9ab0ba;
+$ship-color: rgb(75, 75, 75);
+$cell-size: calc(300px / 10);
 
 html {
   box-sizing: border-box;
@@ -126,6 +128,10 @@ main {
       text-align: right;
     }
   }
+
+  &--hidden {
+    display: none;
+  }
 }
 
 .gameboard {
@@ -146,7 +152,7 @@ main {
     background-color: $light-blue;
 
     &--ship {
-      background-color: rgb(75, 75, 75);
+      background-color: $ship-color;
     }
 
     &--hit {
@@ -159,6 +165,73 @@ main {
       background-color: #fff;
     }
   }
+}
+
+.ship-placement {
+  width: 300px;
+
+  &__title {
+    font-family: 'NFL-Dolphins';
+    font-size: 1.3rem;
+    letter-spacing: 1px;
+    margin: 0 8px 12px;
+  }
+
+  &--hidden {
+    display: none;
+  }
+}
+
+.button-container {
+  display: flex;
+  gap: 16px;
+}
+
+.button {
+  background-color: $dark-blue;
+  border: 1px solid black;
+  color: #fff;
+  font-family: 'NFL-Dolphins';
+  padding: 8px 16px;
+}
+
+.ship-container {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+
+  &--horizontal {
+    flex-direction: column;
+  }
+}
+
+.ship {
+  background-color: $ship-color;
+  border: 1px solid #000;
+  display: flex;
+  flex-direction: column;
+  height: min-content;
+  width: $cell-size;
+
+  &__cell {
+    height: $cell-size;
+    width: 100%;
+
+    &:hover {
+      cursor: grab;
+    }
+  }
+
+  &--horizontal {
+    flex-direction: row;
+    height: $cell-size;
+    width: min-content;
+  }
+}
+
+.ship--horizontal > .ship__cell {
+  height: 100%;
+  width: $cell-size;
 }
 
 .footer {
