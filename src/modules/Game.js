@@ -2,16 +2,8 @@ import Player from './Player';
 
 export default class Game {
   constructor() {
-    this.resetGame();
-    this.startGame();
-  }
-
-  resetGame() {
     this.p1 = new Player('player');
     this.p2 = new Player('computer');
-  }
-
-  startGame() {
     this.p1.gameboard.placeShipsRandomly();
     this.p2.gameboard.placeShipsRandomly();
   }
@@ -22,5 +14,13 @@ export default class Game {
 
   getWinner() {
     return this.p2.gameboard.allShipsSunk() ? 'player' : 'computer';
+  }
+
+  playerTurn(x, y) {
+    return this.p2.gameboard.receiveAttack([x, y]);
+  }
+
+  computerTurn() {
+    return this.p1.gameboard.receiveRandomAttack();
   }
 }
