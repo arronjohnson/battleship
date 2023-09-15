@@ -95,6 +95,41 @@ export default class Gameboard {
     return true;
   }
 
+  // finds co-ordinates surrounding damaged ships
+  #getHuntCoords() {
+    const huntCoords = [];
+
+    for (let i = 0; i < Gameboard.SIZE; i++) {
+      for (let j = 0; j < Gameboard.SIZE; j++) {
+        if (this.grid[j][i] === 'hit') {
+          const adjacentCoords = [
+            { x: i + 1, y: j },
+            { x: i, y: j + 1 },
+            { x: i - 1, y: j },
+            { x: i, y: j - 1 },
+          ];
+
+          adjacentCoords.forEach((coord) => {
+            const [x, y] = [coord.x, coord.y];
+            if (Gameboard.#isValidCoordinate(x, y)) {
+              const targetCell = this.grid[y][x];
+              if (targetCell !== 'hit' && targetCell !== 'miss') {
+                huntCoords.push({ x, y });
+              }
+            }
+          });
+        }
+      }
+    }
+
+    // stop hunting the ship if all of the surrounding co-ordinates are empty
+    const shipsPresent = huntCoords
+      .map((coord) => this.grid[coord.y][coord.x] instanceof Ship)
+      .some((isShip) => isShip === true);
+
+    return shipsPresent ? huntCoords : [];
+  }
+
   allShipsSunk() {
     return this.placedShips.every((ship) => ship.isSunk());
   }
