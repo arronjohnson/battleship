@@ -7,6 +7,15 @@ export default class Game {
     this.p2.gameboard.placeShipsRandomly();
   }
 
+  placePlayerShip(length, x, y, isVertical) {
+    return this.p1.gameboard.placeShip(length, [x, y], isVertical);
+  }
+
+  placePlayerShipsRandomly() {
+    this.p1.resetBoard();
+    this.p1.gameboard.placeShipsRandomly();
+  }
+
   areShipsPlaced() {
     return this.p1.gameboard.placedShips.length === 5;
   }
