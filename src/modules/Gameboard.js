@@ -88,11 +88,34 @@ export default class Gameboard {
   }
 
   receiveRandomAttack() {
+    // AI has a 33% chance to directly attack an already damaged ship
+    const targetDamaged = Math.floor(Math.random() * 3) === 1;
+    if (targetDamaged) {
+      const damagedShips = this.#findDamagedShips();
+      if (damagedShips.length > 0) {
+        return this.receiveAttack(damagedShips.pop());
+      }
+    }
+
+    // otherwise, keep trying random co-ordinates until a hit / miss is registered
     let success = false;
     while (!success) {
       success = this.receiveAttack(Gameboard.#getRandomCoordinate());
     }
     return true;
+  }
+
+  #findDamagedShips() {
+    const damagedShips = [];
+    for (let i = 0; i < Gameboard.SIZE; i++) {
+      for (let j = 0; j < Gameboard.SIZE; j++) {
+        const cell = this.grid[j][i];
+        if (cell instanceof Ship && cell.hitCount > 0) {
+          damagedShips.push([i, j]);
+        }
+      }
+    }
+    return damagedShips;
   }
 
   // finds co-ordinates surrounding damaged ships
