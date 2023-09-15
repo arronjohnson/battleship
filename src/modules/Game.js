@@ -33,7 +33,7 @@ export default class Game {
   }
 
   computerTurn() {
-    return this.p1.gameboard.receiveRandomAttack();
+    return this.p1.gameboard.receiveComputerAttack();
   }
 
   reset() {

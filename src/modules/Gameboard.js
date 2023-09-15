@@ -87,7 +87,7 @@ export default class Gameboard {
     return true;
   }
 
-  receiveRandomAttack() {
+  receiveComputerAttack() {
     // AI has a 33% chance to directly attack an already damaged ship
     const targetDamaged = Math.floor(Math.random() * 3) === 1;
     if (targetDamaged) {
