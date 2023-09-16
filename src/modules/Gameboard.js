@@ -105,7 +105,7 @@ export default class Gameboard {
 
     // to add an artificial difficulty boost, the AI has a 5% chance of
     // automatically targeting an undamaged ship
-    const targetUndamaged = Math.random() < 0.05 && this.#findUndamagedShip();
+    const targetUndamaged = Math.random() < 0.05 && this.#getUndamagedShip();
     if (targetUndamaged) {
       return this.receiveAttack(targetUndamaged);
     }
@@ -118,7 +118,7 @@ export default class Gameboard {
     return true;
   }
 
-  #findUndamagedShip() {
+  #getUndamagedShip() {
     for (let i = 0; i < Gameboard.SIZE; i++) {
       for (let j = 0; j < Gameboard.SIZE; j++) {
         const cell = this.#getCell(i, j);
@@ -130,7 +130,7 @@ export default class Gameboard {
     return null;
   }
 
-  #findDamagedShips() {
+  #getDamagedShips() {
     const damagedShips = [];
     for (let i = 0; i < Gameboard.SIZE; i++) {
       for (let j = 0; j < Gameboard.SIZE; j++) {
