@@ -267,6 +267,11 @@ main {
   .ship-placement {
     height: calc($board-size + 12px + (1.3rem * 1.15));
   }
+
+  .footer {
+    margin: 32px 0;
+    text-align: center;
+  }
 }
 
 @media (max-width: 400px) {
