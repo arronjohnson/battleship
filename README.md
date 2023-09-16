@@ -4,7 +4,7 @@
 
 - Battleship game written in HTML, CSS, and JS.
 - Fully responsive.
-- Manual ship placement is not currently supported on touch devices.
+- Manual ship placement is not supported on touch devices, and may not function correctly.
 
 ## Links
 
