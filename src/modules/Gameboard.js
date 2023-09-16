@@ -99,10 +99,17 @@ export default class Gameboard {
     // find co-ordinates surrounding damaged but not sunken ships, that haven't been attacked yet
     const huntCoords = this.#getHuntCoords();
     if (huntCoords.length > 0) {
-      // choose a random target to artificially improve/reduce the AI's accuracy
+      // choose a random target to introduce variability in the AI's accuracy
       const randomIndex = Math.floor(Math.random() * huntCoords.length);
       const randomCoords = huntCoords.splice(randomIndex, 1);
       return this.receiveAttack(...randomCoords);
+    }
+
+    // to add an artificial difficulty boost, the AI has a 5% chance of
+    // automatically targeting an undamaged ship
+    const targetUndamaged = Math.random() < 0.05 && this.#findUndamagedShip();
+    if (targetUndamaged) {
+      return this.receiveAttack(targetUndamaged);
     }
 
     // otherwise, keep trying random co-ordinates until a hit / miss is registered
@@ -111,6 +118,18 @@ export default class Gameboard {
       success = this.receiveAttack(Gameboard.#getRandomCoordinate());
     }
     return true;
+  }
+
+  #findUndamagedShip() {
+    for (let i = 0; i < Gameboard.SIZE; i++) {
+      for (let j = 0; j < Gameboard.SIZE; j++) {
+        const cell = this.#getCell(i, j);
+        if (cell instanceof Ship && cell.hitCount === 0) {
+          return [i, j];
+        }
+      }
+    }
+    return null;
   }
 
   #findDamagedShips() {
