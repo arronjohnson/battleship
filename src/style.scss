@@ -259,11 +259,12 @@ main {
   main {
     align-items: center;
     flex-direction: column;
+    gap: 32px;
     margin: 32px 0;
   }
 
   .ship-placement {
-    height: 300px;
+    height: 290px;
   }
 }
 
@@ -288,6 +289,7 @@ main {
   .ship-placement {
     display: flex;
     flex-direction: column;
+    height: 255px;
     width: 240px;
 
     &__title {
@@ -300,16 +302,11 @@ main {
   }
 
   .button-container {
-    justify-content: center;
     gap: 8px;
   }
 
   .button {
     padding: 4px 8px;
-  }
-
-  .ship-container {
-    align-self: center;
   }
 
   .ship {
