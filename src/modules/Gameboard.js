@@ -10,6 +10,14 @@ export default class Gameboard {
     this.placedShips = [];
   }
 
+  #getCell(x, y) {
+    return this.grid[y][x];
+  }
+
+  #setCell(x, y, value) {
+    this.grid[y][x] = value;
+  }
+
   static #isValidCoordinate(x, y) {
     return x >= 0 && x < Gameboard.SIZE && y >= 0 && y < Gameboard.SIZE;
   }
@@ -44,9 +52,9 @@ export default class Gameboard {
       if (isVertical) {
         // x and y are flipped because we're accessing rows and columns in a
         // nested array, so y = row and x = column
-        this.grid[y + i][x] = ship;
+        this.#setCell(x, y + i, ship);
       } else {
-        this.grid[y][x + i] = ship;
+        this.#setCell(x + i, y, ship);
       }
     }
     this.placedShips.push(ship);
@@ -73,16 +81,16 @@ export default class Gameboard {
   }
 
   receiveAttack([x, y]) {
-    const cell = this.grid[y][x];
+    const cell = this.#getCell(x, y);
 
     // these co-ordinates have already been attacked
     if (cell === 'hit' || cell === 'miss') return false;
 
     if (cell instanceof Ship) {
       cell.hit();
-      this.grid[y][x] = 'hit';
+      this.#setCell(x, y, 'hit');
     } else {
-      this.grid[y][x] = 'miss';
+      this.#setCell(x, y, 'miss');
     }
     return true;
   }
@@ -109,7 +117,7 @@ export default class Gameboard {
     const damagedShips = [];
     for (let i = 0; i < Gameboard.SIZE; i++) {
       for (let j = 0; j < Gameboard.SIZE; j++) {
-        const cell = this.grid[j][i];
+        const cell = this.#getCell(i, j);
         if (cell instanceof Ship && cell.hitCount > 0) {
           damagedShips.push([i, j]);
         }
@@ -124,7 +132,7 @@ export default class Gameboard {
 
     for (let i = 0; i < Gameboard.SIZE; i++) {
       for (let j = 0; j < Gameboard.SIZE; j++) {
-        if (this.grid[j][i] === 'hit') {
+        if (this.#getCell(i, j) === 'hit') {
           const adjacentCoords = [
             { x: i + 1, y: j },
             { x: i, y: j + 1 },
@@ -135,7 +143,7 @@ export default class Gameboard {
           adjacentCoords.forEach((coord) => {
             const [x, y] = [coord.x, coord.y];
             if (Gameboard.#isValidCoordinate(x, y)) {
-              const targetCell = this.grid[y][x];
+              const targetCell = this.#getCell(x, y);
               if (targetCell !== 'hit' && targetCell !== 'miss') {
                 huntCoords.push({ x, y });
               }
