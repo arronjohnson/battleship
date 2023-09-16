@@ -265,7 +265,7 @@ main {
   }
 
   .ship-placement {
-    height: 290px;
+    height: 300px;
   }
 }
 
@@ -290,7 +290,6 @@ main {
   .ship-placement {
     display: flex;
     flex-direction: column;
-    height: 255px;
     width: 240px;
 
     &__title {
