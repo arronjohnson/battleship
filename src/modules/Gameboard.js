@@ -96,13 +96,13 @@ export default class Gameboard {
   }
 
   receiveComputerAttack() {
-    // AI has a 33% chance to directly attack an already damaged ship
-    const targetDamaged = Math.floor(Math.random() * 3) === 1;
-    if (targetDamaged) {
-      const damagedShips = this.#findDamagedShips();
-      if (damagedShips.length > 0) {
-        return this.receiveAttack(damagedShips.pop());
-      }
+    // find co-ordinates surrounding damaged but not sunken ships, that haven't been attacked yet
+    const huntCoords = this.#getHuntCoords();
+    if (huntCoords.length > 0) {
+      // choose a random target to artificially improve/reduce the AI's accuracy
+      const randomIndex = Math.floor(Math.random() * huntCoords.length);
+      const randomCoords = huntCoords.splice(randomIndex, 1);
+      return this.receiveAttack(...randomCoords);
     }
 
     // otherwise, keep trying random co-ordinates until a hit / miss is registered
@@ -134,31 +134,32 @@ export default class Gameboard {
       for (let j = 0; j < Gameboard.SIZE; j++) {
         if (this.#getCell(i, j) === 'hit') {
           const adjacentCoords = [
-            { x: i + 1, y: j },
-            { x: i, y: j + 1 },
-            { x: i - 1, y: j },
-            { x: i, y: j - 1 },
+            [i + 1, j],
+            [i, j + 1],
+            [i - 1, j],
+            [i, j - 1],
           ];
 
-          adjacentCoords.forEach((coord) => {
-            const [x, y] = [coord.x, coord.y];
-            if (Gameboard.#isValidCoordinate(x, y)) {
-              const targetCell = this.#getCell(x, y);
-              if (targetCell !== 'hit' && targetCell !== 'miss') {
-                huntCoords.push({ x, y });
+          // stop hunting the ship if all of the surrounding co-ordinates are empty
+          const shipPresent = adjacentCoords.some(
+            ([x, y]) => Gameboard.#isValidCoordinate(x, y) && this.#getCell(x, y) instanceof Ship,
+          );
+
+          if (shipPresent) {
+            adjacentCoords.forEach(([x, y]) => {
+              if (Gameboard.#isValidCoordinate(x, y)) {
+                // we only want cells that haven't been attacked yet
+                const cellValue = this.#getCell(x, y);
+                if (cellValue !== 'hit' && cellValue !== 'miss') {
+                  huntCoords.push([x, y]);
+                }
               }
-            }
-          });
+            });
+          }
         }
       }
     }
-
-    // stop hunting the ship if all of the surrounding co-ordinates are empty
-    const shipsPresent = huntCoords
-      .map((coord) => this.grid[coord.y][coord.x] instanceof Ship)
-      .some((isShip) => isShip === true);
-
-    return shipsPresent ? huntCoords : [];
+    return huntCoords;
   }
 
   allShipsSunk() {
