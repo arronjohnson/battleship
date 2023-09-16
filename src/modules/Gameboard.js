@@ -50,8 +50,6 @@ export default class Gameboard {
     const ship = new Ship(length);
     for (let i = 0; i < length; i++) {
       if (isVertical) {
-        // x and y are flipped because we're accessing rows and columns in a
-        // nested array, so y = row and x = column
         this.#setCell(x, y + i, ship);
       } else {
         this.#setCell(x + i, y, ship);
