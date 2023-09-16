@@ -114,6 +114,8 @@ function handleDrop(event) {
     ship.parentElement.removeChild(ship);
     drawGameboards();
   }
+  // default behavior in Safari on iOS 16 is causing Google searches for some reason
+  event.preventDefault();
 }
 
 function addDragEventListeners(element) {
