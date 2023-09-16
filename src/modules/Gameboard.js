@@ -94,6 +94,12 @@ export default class Gameboard {
   }
 
   receiveComputerAttack() {
+    // find consecutive hits in a straight line and target the next undamaged co-ordinate
+    const damagedShip = this.#getDamagedShip();
+    if (damagedShip) {
+      return this.receiveAttack(damagedShip);
+    }
+
     // find co-ordinates surrounding damaged but not sunken ships, that haven't been attacked yet
     const huntCoords = this.#getHuntCoords();
     if (huntCoords.length > 0) {
@@ -130,17 +136,16 @@ export default class Gameboard {
     return null;
   }
 
-  #getDamagedShips() {
-    const damagedShips = [];
+  #getDamagedShip() {
     for (let i = 0; i < Gameboard.SIZE; i++) {
       for (let j = 0; j < Gameboard.SIZE; j++) {
         const cell = this.#getCell(i, j);
-        if (cell instanceof Ship && cell.hitCount > 0) {
-          damagedShips.push([i, j]);
+        if (cell instanceof Ship && cell.hitCount > 1) {
+          return [i, j];
         }
       }
     }
-    return damagedShips;
+    return null;
   }
 
   // finds co-ordinates surrounding damaged ships
