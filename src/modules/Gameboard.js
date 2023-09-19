@@ -109,9 +109,9 @@ export default class Gameboard {
       return this.receiveAttack(...randomCoords);
     }
 
-    // to add an artificial difficulty boost, the AI has a 5% chance of
+    // to add an artificial difficulty boost, the AI has a 2.5% chance of
     // automatically targeting an undamaged ship
-    const targetUndamaged = Math.random() < 0.05 && this.#getUndamagedShip();
+    const targetUndamaged = Math.random() < 0.025 && this.#getUndamagedShip();
     if (targetUndamaged) {
       return this.receiveAttack(targetUndamaged);
     }
